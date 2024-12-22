@@ -11,8 +11,21 @@ import { createReadableStreamFromReadable } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
+import prisma from "@kiosk/audit/context/db";
 
 const ABORT_DELAY = 5_000;
+
+process.on('SIGINT', async () => {
+  console.log('SIGINT received. Closing Prisma...');
+  await prisma.$disconnect();
+  process.exit(0);
+});
+
+process.on('SIGTERM', async () => {
+  console.log('SIGTERM received. Closing Prisma...');
+  await prisma.$disconnect();
+  process.exit(0);
+});
 
 export default function handleRequest(
   request: Request,

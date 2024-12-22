@@ -1,10 +1,9 @@
 import { ActionFunctionArgs, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@kiosk/audit/context/db";
 
 export const action = async ({ params }: ActionFunctionArgs) => {
   invariant(params.taskId, "Missing taskId param");
-  const prisma = new PrismaClient();
 
   await prisma.task.delete({
     where: {

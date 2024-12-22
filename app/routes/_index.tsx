@@ -31,10 +31,10 @@ export default function Index() {
       <Text>Here are the product requirements:</Text>
       <List>
         <List.Item>
-          <Checkbox label="Users can create tasks" />
+          <Checkbox label="Users can create tasks" defaultChecked={true} />
         </List.Item>
         <List.Item>
-          <Checkbox label="Users can filter tasks" />
+          <Checkbox label="Users can filter tasks" defaultChecked={true} />
         </List.Item>
         <List.Item>
           <Group>

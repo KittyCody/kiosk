@@ -1,37 +1,96 @@
-import { data } from "@remix-run/node";
+import { data, LoaderFunctionArgs } from "@remix-run/node";
 import { Form, Link, useLoaderData } from "@remix-run/react";
-import { PrismaClient } from "@prisma/client";
+import { TaskState } from "@kiosk/audit/models/task.state";
+import { getTasks } from "@kiosk/audit/routes/checklist/get.tasks";
+import { useEffect } from "react";
 
-export const loader = async () => {
-  const prisma = new PrismaClient();
-  const query = {
-    include: {
-      owner: {
-        select: {
-          firstName: true,
-          lastName: true,
-        },
-      },
-    },
-  };
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const searchParams = new URL(request.url).searchParams;
+  const tasksFilter = Object.fromEntries(searchParams);
 
-  const tasks = await prisma.task.findMany(query);
+  const tasks = await getTasks(tasksFilter);
 
-  return data({ tasks });
+  return data({ tasks, tasksFilter });
 };
 
 export default function Index() {
-  const { tasks } = useLoaderData<typeof loader>();
+  const { tasks, tasksFilter } = useLoaderData<typeof loader>();
+  const hasSearchParams = Object.values(tasksFilter).some((v) => v);
 
-  if (!tasks?.length) return <p>Add your first task</p>;
+  const updateSearchForm = () => {
+    const titleField = document.getElementById("title");
+    if (titleField instanceof HTMLInputElement) {
+      titleField.value = tasksFilter.title || "";
+    }
+
+    const userNameField = document.getElementById("userName");
+    if (userNameField instanceof HTMLInputElement) {
+      userNameField.value = tasksFilter.userName || "";
+    }
+
+    const stateField = document.getElementById("state");
+    if (stateField instanceof HTMLSelectElement) {
+      stateField.value = tasksFilter.state || "";
+    }
+  };
+
+  useEffect(updateSearchForm, [tasksFilter]);
 
   return (
     <>
       <h1>Checklist</h1>
+
+      <Form id="search-form" method="get">
+        <div className="form-group">
+          <label htmlFor="title">Task name</label>
+          <input
+            id="title"
+            aria-label="Title"
+            name="title"
+            placeholder="Title"
+            type="text"
+            defaultValue={tasksFilter.title}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="userName">Username</label>
+          <input
+            id="userName"
+            aria-label="User Name"
+            name="userName"
+            placeholder="User"
+            type="text"
+            defaultValue={tasksFilter.userName}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="state">Choose an option:</label>
+          <select id="state" name="state" defaultValue={tasksFilter.state}>
+            <option value="">Any state</option>
+            <option value={TaskState.Todo}>Todo</option>
+            <option value={TaskState.Doing}>Doing</option>
+            <option value={TaskState.Done}>Done</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <button type="submit">Search</button>
+        </div>
+      </Form>
+
       <Link to="/checklist/new">Create Task</Link>
 
       {!tasks.length ? (
-        <p>No tasks.</p>
+        <p>
+          {hasSearchParams ? (
+            <span>
+              No tasks found using this search criteria. <Link to="/checklist">Clear filters</Link>
+            </span>
+          ) : (
+            <span>
+              No tasks. <Link to="/checklist/new">Create your first task</Link>
+            </span>
+          )}
+        </p>
       ) : (
         <ul>
           {tasks.map((task) => (
