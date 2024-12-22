@@ -178,8 +178,7 @@ export const theme: MantineThemeOverride = {
         label: { marginBottom: 4 },
         input: {
           height: 42,
-          borderColor:
-            props.variant === "unstyled" ? "transparent" : theme.colors.gray[2],
+          borderColor: props.variant === "unstyled" ? "transparent" : theme.colors.gray[2],
         },
       }),
     },
@@ -198,8 +197,7 @@ export const theme: MantineThemeOverride = {
         input: {
           // TODO: not ideal. Probably worth overriding variants instead
           height: props.size === "md" ? 42 : "inherit",
-          borderColor:
-            props.variant === "unstyled" ? "transparent" : theme.colors.gray[2],
+          borderColor: props.variant === "unstyled" ? "transparent" : theme.colors.gray[2],
         },
       }),
     },

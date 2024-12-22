@@ -1,10 +1,5 @@
 import "@mantine/core/styles.css";
-import {
-  Links,
-  Meta,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
+import { Links, Meta, Scripts, ScrollRestoration } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { theme } from "./theme";

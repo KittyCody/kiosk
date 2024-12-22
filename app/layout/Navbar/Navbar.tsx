@@ -27,27 +27,11 @@ export const Navbar = () => {
           <List.Item key={"navbarItem" + item.label}>
             <NavLink to={item.href}>
               {({ isActive }) => (
-                <Group
-                  className={`${classes.navbar__item} ${
-                    isActive ? classes["navbar__item--active"] : " "
-                  }`}
-                >
-                  <ThemeIcon
-                    className={
-                      isActive
-                        ? classes["navbar__icon--active"]
-                        : classes.navbar__icon
-                    }
-                  >
+                <Group className={`${classes.navbar__item} ${isActive ? classes["navbar__item--active"] : " "}`}>
+                  <ThemeIcon className={isActive ? classes["navbar__icon--active"] : classes.navbar__icon}>
                     <item.icon />
                   </ThemeIcon>
-                  <Text
-                    className={
-                      isActive
-                        ? classes["navbar__title--active"]
-                        : classes.navbar__title
-                    }
-                  >
+                  <Text className={isActive ? classes["navbar__title--active"] : classes.navbar__title}>
                     {item.label}
                   </Text>
                 </Group>

@@ -6,16 +6,11 @@ import classes from "./Header.module.css";
 import { UserPopover } from "@kiosk/audit/components/UserPopover/UserPopover";
 import { routes } from "@kiosk/audit/utils/constants/routes";
 
-type BreadcrumbMatch = UIMatch<
-  Record<string, unknown>,
-  { breadcrumb: (data?: unknown) => JSX.Element }
->;
+type BreadcrumbMatch = UIMatch<Record<string, unknown>, { breadcrumb: (data?: unknown) => JSX.Element }>;
 
 export const Header = () => {
   const matches = useMatches() as BreadcrumbMatch[];
-  const breadcrumb = matches
-    .find(({ handle }) => handle?.breadcrumb)
-    ?.handle.breadcrumb();
+  const breadcrumb = matches.find(({ handle }) => handle?.breadcrumb)?.handle.breadcrumb();
 
   return (
     <Flex className={classes.header__container}>

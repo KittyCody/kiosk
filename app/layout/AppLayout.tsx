@@ -1,18 +1,14 @@
-import { AppShell } from "@mantine/core"
-import { Outlet } from "@remix-run/react"
-import { Navbar } from "./Navbar/Navbar"
-import { Logo } from "../components/Logo/Logo"
+import { AppShell } from "@mantine/core";
+import { Outlet } from "@remix-run/react";
+import { Navbar } from "./Navbar/Navbar";
+import { Logo } from "../components/Logo/Logo";
 
-import classes from "./Navbar/Navbar.module.css"
-import { Header } from "./Header/Header"
+import classes from "./Navbar/Navbar.module.css";
+import { Header } from "./Header/Header";
 
 export const AppLayout = () => {
   return (
-    <AppShell
-      header={{ height: 75 }}
-      navbar={{ width: 265, breakpoint: "sm" }}
-      layout="alt"
-    >
+    <AppShell header={{ height: 75 }} navbar={{ width: 265, breakpoint: "sm" }} layout="alt">
       <AppShell.Navbar withBorder={false} className={classes.appLayout__navbar}>
         <Logo height={28} />
         <Navbar />
@@ -26,5 +22,5 @@ export const AppLayout = () => {
         <Outlet />
       </AppShell.Main>
     </AppShell>
-  )
-}
+  );
+};

@@ -1,11 +1,11 @@
-import { ActionIcon, ThemeIcon } from "@mantine/core"
-import { Link } from "@remix-run/react"
-import { IconChevronLeft } from "@tabler/icons-react"
+import { ActionIcon, ThemeIcon } from "@mantine/core";
+import { Link } from "@remix-run/react";
+import { IconChevronLeft } from "@tabler/icons-react";
 
 type Props = {
-  readonly onClick?: () => void
-  readonly type?: "button" | "submit" | "reset"
-}
+  readonly onClick?: () => void;
+  readonly type?: "button" | "submit" | "reset";
+};
 
 export function BackButton({ onClick, type }: Props) {
   return (
@@ -22,7 +22,7 @@ export function BackButton({ onClick, type }: Props) {
         <IconChevronLeft />
       </ThemeIcon>
     </ActionIcon>
-  )
+  );
 }
 
 export const BackLink = ({ href }: { readonly href: string }) => {
@@ -34,5 +34,5 @@ export const BackLink = ({ href }: { readonly href: string }) => {
         </ThemeIcon>
       </ActionIcon>
     </Link>
-  )
-}
+  );
+};

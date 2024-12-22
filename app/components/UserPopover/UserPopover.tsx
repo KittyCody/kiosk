@@ -16,17 +16,11 @@ export const UserPopover = () => {
         </UnstyledButton>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Item
-          leftSection={
-            <Avatar alt="user-profile-picture" color="green" radius="xl" />
-          }
-        >
+        <Menu.Item leftSection={<Avatar alt="user-profile-picture" color="green" radius="xl" />}>
           <Link to="/settings/account/edit">
             <Flex direction="column">
               <Text>John Doe</Text>
-              <Text className={classes["menu__item-email"]}>
-                john.doe@gmail.com
-              </Text>
+              <Text className={classes["menu__item-email"]}>john.doe@gmail.com</Text>
             </Flex>
           </Link>
         </Menu.Item>

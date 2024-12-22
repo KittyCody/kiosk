@@ -30,16 +30,10 @@ export const ReportMenu = () => {
         </UnstyledButton>
       </Menu.Target>
       <Menu.Dropdown className={classes["report-menu__dropdown"]}>
-        <Menu.Item
-          leftSection={<IconList size={18} />}
-          className={classes["report-menu__item"]}
-        >
+        <Menu.Item leftSection={<IconList size={18} />} className={classes["report-menu__item"]}>
           <Link to="/reports">Switch report</Link>
         </Menu.Item>
-        <Menu.Item
-          leftSection={<IconTrash size={18} />}
-          className={classes["report-menu__item"]}
-        >
+        <Menu.Item leftSection={<IconTrash size={18} />} className={classes["report-menu__item"]}>
           Delete report
         </Menu.Item>
       </Menu.Dropdown>
