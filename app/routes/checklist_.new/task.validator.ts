@@ -10,7 +10,7 @@ export const validateTask = (taskPartial: Partial<Task>): string | null => {
     return "title:too_long";
   }
 
-  if (taskPartial.description && taskPartial.description.length > 300) {
+  if (taskPartial.description && taskPartial.description.length > TASK_CONSTRAINTS.descriptionLength) {
     return "description:too_long";
   }
 

@@ -4,5 +4,5 @@ export interface Task {
   id: string;
   title: string;
   state: TaskState;
-  description: string | undefined;
+  description?: string;
 }

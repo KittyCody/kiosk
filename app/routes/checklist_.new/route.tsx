@@ -13,7 +13,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   const error = validateTask(taskPartial);
   if (error) {
-    return data(error, { status: 400 });
+    throw new Response(error, { status: 400 });
   }
 
   await createTask(currentUser.id, taskPartial);
@@ -29,20 +29,20 @@ export default function Index() {
       <h2>New Task</h2>
 
       <Form id="task-form" method="post">
-        <p>
-          <span>Title</span>
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
           <input aria-label="Title" name="title" placeholder="Title" type="text" />
-        </p>
-        <label>
-          <span>Description</span>
+        </div>
+        <div className="form-group">
+          <label htmlFor="title">Description</label>
           <textarea name="description" rows={6} />
-        </label>
-        <p>
+        </div>
+        <div className="form-group">
           <button type="submit">Save</button>
           <button onClick={() => navigate(-1)} type="button">
             Cancel
           </button>
-        </p>
+        </div>
       </Form>
     </>
   );
