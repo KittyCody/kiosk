@@ -29,20 +29,26 @@ export default function Index() {
       <h2>New Task</h2>
 
       <Form id="task-form" method="post">
-        <p>
-          <span>Title</span>
-          <input aria-label="Title" name="title" placeholder="Title" type="text" />
-        </p>
-        <label>
-          <span>Description</span>
-          <textarea name="description" rows={6} />
-        </label>
-        <p>
+        <div className="form-group">
+          <label htmlFor="title">
+            <span>Title</span>
+          </label>
+          <input aria-label="Title" id="title" name="title" placeholder="Title" type="text" />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="description">
+            <span>Description</span>
+          </label>
+          <textarea name="description" id="description" rows={6} placeholder="Task description" />
+        </div>
+
+        <div className="form-actions">
           <button type="submit">Save</button>
           <button onClick={() => navigate(-1)} type="button">
             Cancel
           </button>
-        </p>
+        </div>
       </Form>
     </>
   );

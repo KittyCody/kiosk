@@ -105,13 +105,38 @@ export default function Index() {
       ) : (
         <ul>
           {tasks.map((task) => (
-            <li key={task.id}>
-              <h3>{task.title}</h3>
+            <li key={task.id} className="task-item">
+              <h3>
+                <Link to={`/checklist/${task.id}`}>{task.title}</Link>
+              </h3>
               <span>{task.owner.firstName}</span>
               <p>{task.state}</p>
               <p>{task.description}</p>
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
               <Link to={`/checklist/${task.id}/update`}>Edit</Link>
               <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
+=======
+=======
+>>>>>>> Stashed changes
+              <div className="task-actions">
+                <Form
+                  action={`${task.id}/delete`}
+                  method="post"
+                  onSubmit={(event) => {
+                    const response = confirm("Please confirm you want to delete this task.");
+                    if (!response) {
+                      event.preventDefault();
+                    }
+                  }}
+                >
+                  <button type="submit">Delete</button>
+                </Form>
+              </div>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
             </li>
           ))}
         </ul>
