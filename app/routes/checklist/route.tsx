@@ -1,12 +1,12 @@
 import { data, LoaderFunctionArgs } from "@remix-run/node";
-import { Form, Link, useLoaderData } from "@remix-run/react";
+import { Form, Link, useLoaderData, useFetcher } from "@remix-run/react";
 import { TaskState } from "@kiosk/audit/models/task.state";
-import { getTasks } from "@kiosk/audit/routes/checklist/get.tasks";
+import { getTasks, TaskSearchFilter } from "@kiosk/audit/routes/checklist/get.tasks";
 import { useEffect } from "react";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const searchParams = new URL(request.url).searchParams;
-  const tasksFilter = Object.fromEntries(searchParams);
+  const tasksFilter: Partial<TaskSearchFilter> = Object.fromEntries(searchParams);
 
   const tasks = await getTasks(tasksFilter);
 
@@ -15,8 +15,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function Index() {
   const { tasks, tasksFilter } = useLoaderData<typeof loader>();
-  const hasSearchParams = Object.values(tasksFilter).some((v) => v);
+  const hasSearchParams = Object.values(tasksFilter).some((v) => !!v);
+  const fetcher = useFetcher();
 
+  // handles back navigation
   const updateSearchForm = () => {
     const titleField = document.getElementById("title");
     if (titleField instanceof HTMLInputElement) {
@@ -36,13 +38,22 @@ export default function Index() {
 
   useEffect(updateSearchForm, [tasksFilter]);
 
+  const handleDeleteTask = (taskId: string) => {
+    const response = confirm("Please confirm you want to delete this task.");
+    if (!response) {
+      return;
+    }
+
+    fetcher.submit({}, { method: "POST", action: `${taskId}/delete` });
+  };
+
   return (
     <>
       <h1>Checklist</h1>
 
       <Form id="search-form" method="get">
         <div className="form-group">
-          <label htmlFor="title">Task name</label>
+          <label htmlFor="title">Title</label>
           <input
             id="title"
             aria-label="Title"
@@ -99,18 +110,8 @@ export default function Index() {
               <span>{task.owner.firstName}</span>
               <p>{task.state}</p>
               <p>{task.description}</p>
-              <Form
-                action={`${task.id}/delete`}
-                method="post"
-                onSubmit={(event) => {
-                  const response = confirm("Please confirm you want to delete this task.");
-                  if (!response) {
-                    event.preventDefault();
-                  }
-                }}
-              >
-                <button type="submit">Delete</button>
-              </Form>
+              <Link to={`/checklist/${task.id}/update`}>Edit</Link>
+              <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
             </li>
           ))}
         </ul>
