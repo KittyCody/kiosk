@@ -119,3 +119,5 @@ export default function Index() {
     </>
   );
 }
+
+  // handles back navigation
