@@ -1,12 +1,12 @@
 import { data, LoaderFunctionArgs } from "@remix-run/node";
-import { Form, Link, useLoaderData, useFetcher } from "@remix-run/react";
+import { Form, Link, useFetcher, useLoaderData } from "@remix-run/react";
 import { TaskState } from "@kiosk/audit/models/task.state";
-import { getTasks, TaskSearchFilter } from "@kiosk/audit/routes/checklist/get.tasks";
+import { getTasks } from "@kiosk/audit/routes/checklist/get.tasks";
 import { useEffect } from "react";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const searchParams = new URL(request.url).searchParams;
-  const tasksFilter: Partial<TaskSearchFilter> = Object.fromEntries(searchParams);
+  const tasksFilter = Object.fromEntries(searchParams);
 
   const tasks = await getTasks(tasksFilter);
 
@@ -15,7 +15,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function Index() {
   const { tasks, tasksFilter } = useLoaderData<typeof loader>();
-  const hasSearchParams = Object.values(tasksFilter).some((v) => !!v);
+  const hasSearchParams = Object.values(tasksFilter).some((v) => v);
   const fetcher = useFetcher();
 
   // handles back navigation
@@ -119,5 +119,3 @@ export default function Index() {
     </>
   );
 }
-
-  // handles back navigation
