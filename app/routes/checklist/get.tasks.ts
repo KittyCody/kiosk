@@ -1,5 +1,6 @@
 import { TaskState } from "@kiosk/audit/models/task.state";
 import prisma from "@kiosk/audit/context/db";
+import { Prisma } from "@prisma/client";
 
 export interface TaskSearchFilter {
   title?: string;
@@ -21,8 +22,9 @@ export async function getTasks(filter: TaskSearchFilter) {
   });
 }
 
-const buildQuery = (filter: TaskSearchFilter): any => {
-  const where: any = {};
+const buildQuery = (filter: TaskSearchFilter): Prisma.TaskWhereInput => {
+  const where: Prisma.TaskWhereInput = {};
+
   if (filter.title) {
     where.title = {
       contains: filter.title,
@@ -60,3 +62,4 @@ const buildQuery = (filter: TaskSearchFilter): any => {
 
   return where;
 };
+
