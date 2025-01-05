@@ -110,7 +110,11 @@ export default function Index() {
               <span>{task.owner.firstName}</span>
               <p>{task.state}</p>
               <p>{task.description}</p>
+<<<<<<< Updated upstream
               <Link to={`/checklist/${task.id}/edit`}>Edit</Link>
+=======
+
+>>>>>>> Stashed changes
               <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
             </li>
           ))}
@@ -119,3 +123,5 @@ export default function Index() {
     </>
   );
 }
+
+  // handles back navigation
